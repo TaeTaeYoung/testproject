@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Anyone</title>
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/content.css">
+<link rel="stylesheet" href="css/side.css">
+<link rel="stylesheet" href="css/section.css">
+<link rel="stylesheet" href="css/footer.css">
+<style rel="stylesheet" type="text/css">
+#table_div{
+    width: 100%;
+    float : left;
+    margin-left: 200px;
+}
+#table_div>table{
+/* 	border: 1px solid gray; */
+/* 	background-color: whitesmoke; */
+/* 	border-radius: 10px ; */
+}
+#table_div>table>thead{
+
+}
+#table_div>table>thead>tr{
+	border: 1px solid gray;
+	border-radius: 10px ;
+	background-color: whitesmoke;
+/* 	background-color: red; */
+}
+#table_div>table>thead>tr>th{
+	width: 50px;
+}
+#table_div>table>thead>tr>th+th{
+	width: 300px;
+}
+#table_div>table>thead>tr>th+th+th{
+	width: 100px;
+}
+#table_div>table>thead>tr>th+th+th+th{
+	width: 80px;
+}
+table{
+	width: 800px;
+	margin-top: 20px;
+	border-radius: 10px ;
+	background-color: whitesmoke;
+	border-collapse: collapse;
+}
+td:first-child{
+	
+}
+th, td {
+	padding: 5px;
+	text-align: center;
+	border-bottom: 1px solid gray;
+	font-size: 15pt;
+}
+#list{
+	border: 1px solid gray;
+}
+#content1>div>button{
+	margin-left:200px;
+	margin-top: 10px;
+	float: left;
+	background-color: whitesmoke;
+}
+
+</style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript">
+	
+	$(function(){
+		$.ajax({
+			'url':'http://localhost:8080/test/data.do',
+			'dataType':'json',
+			'data':{
+				'type':'list'
+			},
+			'type':'post',
+			success:function(result){
+				var a1 = result.data;
+				//console.log(a1);
+				
+				var htmlTag="";
+				a1.map(function(value, index){
+					//console.log(index, value);
+					value.id=(value.id).substring(0,value.id.indexOf('@'));
+					var trTag=$('<tr>')
+                        .attr("href",'http://localhost:8080/test/detail.do?num='+value.num)
+                        .click(function(){
+						$(location).attr("href",($(this).attr("href")));
+					});
+                    // htmlTag
+                    // htmlTag+="<tr>";
+					// htmlTag+="<td>"+value.num+"</td>";
+					// htmlTag+="<td>"+value.sub+"</td>";
+					// htmlTag+="<td>"+value.id+"</td>";
+					// htmlTag+="<td>"+value.cnt+"</td>";
+					// htmlTag+="</tr>";
+                    $('<td>').html(value.num).appendTo(trTag);
+                    $('<td>').html(value.sub).appendTo(trTag);
+                    $('<td>').html(value.id).appendTo(trTag);
+                    $('<td>').html(value.cnt).appendTo(trTag);
+                    $('#list').append(trTag);
+				});
+                
+				//$('#list').html(htmlTag);
+			}
+		});
+		
+		$('#content1>div>button').click(function(){
+			$(location).attr("href","http://localhost:8080/test/add.do");
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="header">
+		<a href="index.do"><img src="imgs/logo.png" id="logo"/></a>
+		<div>
+			<button type="button" id="loginbtn" onclick="location.href='login/login.html'">로그인</button>
+			<button type="button" id="joinbtn" onclick="location.href='login/join.html'">회원가입</button>
+		</div>
+	</div>
+    <div id="menu">
+		<ul>
+			<li>종목
+				<ul>
+					<li><a href="list.do">농구</a></li>
+					<li><a href="menu/football.html">축구</a></li>
+				</ul>
+			</li>
+			<li>게시판
+				<ul>
+					<li><a href="menu/basket.html">자유</a></li>
+					<li><a href="menu/basket/findteam.html">팀찾기</a></li>
+				</ul>
+			</li>
+			<li>문의사항
+				<ul>
+					<li><a href="menu/help.html">관리자요청</a></li>
+				</ul>
+			</li>
+			<li><a href="menu/reservation.html">예약</a>
+				<ul>
+					<li><a href="menu/ready.html">빅보이짐</a></li>
+					<li><a href="menu/ready.html">연제구</a></li>
+					<li><a href="menu/ready.html">하이스포츠</a></li>
+					<li><a href="menu/ready.html">바스켓몽</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div id="content1">
+		<div id="table_div">
+			<table >
+                <thead class="table_list" >
+                    <tr>
+                        <th >번호</th>
+                        <th >제목</th>
+                        <th >아이디</th>
+                        <th >조회수</th>
+                    </tr>
+                </thead>
+                <tbody id="list" class="table_list">
+                
+                </tbody>
+            </table>
+		</div>
+		<div><button >글쓰기</button></div>
+	</div>
+	<div id="side">
+		<div class="bx">
+			<div><img src="imgs/socks1.png" alt="img01"></div>
+		</div>
+		<p><a href="https://www.masterwook.com/">마스터욱 스포츠양말</a></p>
+	</div>
+	<div id="footer">
+		&copy; by Taeyoung co.ltd. Allrights reserved.<br>
+		웹케시 그룹 교육생 2기 부산광역시 동구 중앙대로 331 메리츠화재
+	</div>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Anyone</title>
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/menu.css">
+<link rel="stylesheet" href="css/content.css">
+<link rel="stylesheet" href="css/side.css">
+<link rel="stylesheet" href="css/section.css">
+<link rel="stylesheet" href="css/footer.css">
+<style rel="stylesheet" type="text/css">
+
+
+
+</style>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/menu.js"></script>
+<script type="text/javascript">
+	
+$(function(){
+	
+    $('#btn').eq(0).click(function(){
+    	
+		$('#userid').val('user1@user.com');
+		$("#usertext").val().split('\n').join('<br>');
+		$('#section4>.text_table>form').submit(function(e){
+			e.preventDefault();
+			//console.log(sub);
+			//console.log(content);
+			var param=$(e.target).serialize();
+            $.ajax({
+                'url':'http://localhost:8080/test/insert.do',
+                'dataType':'json',
+                'data': {
+                    'id':'user1@user.com',
+                    'sub': $("#sub>label+input").val(),
+                    'content': $("#usertext").val()
+                },
+                'type':'post',
+                success:function(result){
+                    alert("입력 성공");
+					$(location).attr("href","http://localhost:8080/test/list.do");
+	                
+                }
+            });
+            
+            
+		});
+	});
+});
+</script>
+</head>
+<body>
+	<div id="header">
+		<a href="index.do"><img src="imgs/logo.png" id="logo"/></a>
+		<div>
+			<button type="button" id="loginbtn" onclick="location.href='login/login.html'">로그인</button>
+			<button type="button" id="joinbtn" onclick="location.href='login/join.html'">회원가입</button>
+		</div>
+	</div>
+    <div id="menu">
+		<ul>
+			<li>종목
+				<ul>
+					<li><a href="list.do">농구</a></li>
+					<li><a href="menu/football.html">축구</a></li>
+				</ul>
+			</li>
+			<li>게시판
+				<ul>
+					<li><a href="menu/basket.html">자유</a></li>
+					<li><a href="menu/basket/findteam.html">팀찾기</a></li>
+				</ul>
+			</li>
+			<li>문의사항
+				<ul>
+					<li><a href="menu/help.html">관리자요청</a></li>
+				</ul>
+			</li>
+			<li><a href="menu/reservation.html">예약</a>
+				<ul>
+					<li><a href="menu/ready.html">빅보이짐</a></li>
+					<li><a href="menu/ready.html">연제구</a></li>
+					<li><a href="menu/ready.html">하이스포츠</a></li>
+					<li><a href="menu/ready.html">바스켓몽</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<div id="content1">
+		<div id="section4">
+			<p><a>게시글</a></p>
+            <div class="text_table">
+                <form action="">
+					<div id="sub">
+						<label>제목</label>
+						<input type="text" name="sub">
+						<input type="hidden" id="userid" name="id">
+					</div>
+					<div id="text_content">
+						<hr>
+						<textarea id="usertext" name="content" cols="99" rows="20"></textarea>
+					</div>
+					<div id="btn">
+						<button>작성</button>
+						<button>취소</button>
+					</div>
+				</form>
+            </div>
+		</div>
+	</div>
+	<div id="side">
+		<div class="bx">
+			<div><img src="imgs/socks1.png" alt="img01"></div>
+		</div>
+		<p><a href="https://www.masterwook.com/">마스터욱 스포츠양말</a></p>
+	</div>
+	<div id="footer">
+		&copy; by Taeyoung co.ltd. Allrights reserved.<br>
+		웹케시 그룹 교육생 2기 부산광역시 동구 중앙대로 331 메리츠화재
+	</div>
+</body>
+</html>
